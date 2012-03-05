@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+use strict;
+
+use IO::File;
+
+my(@beans);
+while (my $line=STDIN->getline()) {
+  print($line);
+  chomp($line);
+  if ($line=~/^(\s+)
+               (?:(?:public|private|protected)\s+)?
+               (?:(?:static)\s+)?
+               ([][A-Za-z0-9_]+)\s+
+               (\w+)/x) {
+    push(@beans,[$2,$3,$1]);
+  }
+}
+
+foreach my $ref (@beans) {
+  my($class) =$ref->[0];
+  my($prop)  =$ref->[1];
+  my($indent)=$ref->[2];
+
+  my $actualProp = $prop;
+  if ($prop =~ /^m([A-Z])(.*)/) {
+    $prop =~ s/^m([A-Z])(.*)/$1$2/;
+  }
+  if ($prop =~ /^_([a-zA-Z])(.*)/) {
+    $prop =~ s/^_([a-zA-Z])(.*)/$1$2/;
+  }
+
+  my($lprop) =length($prop);
+  my($lclass)=length($class);
+
+  STDOUT->print("\n");
+  STDOUT->print(
+     $indent,"public $class get\u$prop() {\n",
+     $indent,"  return $actualProp;\n",
+     $indent,"}\n",
+     $indent,"public void set\u$prop($class aValue) {\n",
+     $indent,"  $actualProp = aValue;\n",
+     $indent,"}\n");
+}

@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+
+use File::Copy;
+
+my $JSP_BASE_PATTERN=".*?/WEB-INF/jsp/";
+
+my $deploy_dir = $ENV{'JSP_DEPLOY_BASE'}."/".$ENV{'PROJECT_NAME'}."/WEB-INF/jsp";
+
+my $filename=$ARGV[0];
+my $orig_file = $filename;
+
+# copy jsp file to deploy
+$filename=~s/$JSP_BASE_PATTERN//;
+
+copy($orig_file, "$deploy_dir/$filename");
+print "$deploy_dir/$filename\n";

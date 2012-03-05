@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+
+use strict;
+
+use IO::File;
+
+my @GROUPS=qw(java
+              javax
+              com.sun
+              com.objectspace
+              com.sleepycat
+              com.oroinc
+              com.ibm
+              org.apache
+              org.w3c
+              org.xml
+              atg
+              weblogic
+              com.go2);
+
+my %classes;
+
+while (my $line=STDIN->getline()) {
+  next unless ($line=~/^\s*import\s+(\S+)\s*;/);
+
+  my $class=$1;
+
+  my $class_group="other";
+  foreach my $group (@GROUPS) {
+    if ($class=~/^\Q$group.\E/) {
+      $class_group=$group;
+      last;
+    }
+  }
+  push(@{$classes{$class_group}},$class);
+}
+
+my %seen;
+foreach my $group (@GROUPS,"other") {
+  next unless ($classes{$group});
+  STDOUT->print((map { "import $_;\n" }
+                     ( sort ( grep { ! $seen{$_}++ }
+                                   (@{$classes{$group}})))),"\n");
+}
+
+0;

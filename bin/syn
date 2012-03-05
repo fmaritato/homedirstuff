@@ -1,0 +1,14 @@
+#!/bin/sh
+
+NAME=$1
+
+PID=`ps auwwx | grep synergy | grep -v grep | awk '{print $2}'`
+if [ -n "$PID" ]; then
+  sudo kill $PID
+fi
+
+cat $HOME/synergy.conf.template | \
+  sed "s/HOSTNAME/${NAME}/" \
+  > $HOME/synergy.conf
+
+/usr/bin/synergys -c $HOME/synergy.conf

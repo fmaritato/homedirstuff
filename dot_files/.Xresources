@@ -1,0 +1,21 @@
+XTerm*background: black
+XTerm*colorBDMode: false
+XTerm*font: -Misc-Fixed-Medium-R-SemiCondensed--13-120-75-75-C-60-ISO10646-1
+XTerm*foreground: white
+XTerm*marginBell: false
+XTerm*multiScroll: true
+XTerm*scrollBar: true
+XTerm*scrollKey: true
+XTerm*scrollLines: 2048
+XTerm*underLine: true
+XTerm*utf8: 1
+XTerm*visualBell: false
+
+XTerm*color7: AntiqueWhite
+XTerm*color8: Grey25
+
+XTerm*backarrowKeyIsErase: true
+XTerm*VT100*backarrowKey: true
+
+xterm*foreground: white
+xterm*background: black

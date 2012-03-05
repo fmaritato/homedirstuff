@@ -1,0 +1,9 @@
+#!/bin/sh
+
+java -Ddb.url='jdbc:inetdae7a:ehdb?database=eharmony_dev'\
+ -Ddb.driver=com.inet.tds.TdsDriver\
+ -Ddb.username=eharmony\
+ -Ddb.password=eh264zf4f\
+ -Djava.util.logging.config.file=logging.properties\
+ -Dtable.name=$*\
+ com.maritatf.test.ddl.DDLExtract

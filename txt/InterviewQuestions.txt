@@ -1,0 +1,129 @@
+Interview Questions
+
+Java Language
+ - Difference between class, interface, abstract class
+   - Why do interfaces exist?
+
+ - Difference between public, private, protected, default
+   public - all
+   private - class only
+   protected - class and subclass
+   default - class, subclass in same package
+
+ - Difference between Vector, List and array. When would you want to use each one.
+
+ - What is:
+   - Autoboxing
+   - Generics/for loop
+   - Typesafe enums
+   - Annotations
+
+ - What is Garbage Collection
+   - -Xms, -Xmx values, what happens if vm needs to allocate more space.
+   - How to prevent freeze (concurrent gc)
+
+ - Threads
+   - How to protect shared data structure
+   - Variable marked as "volatile". What does that mean?
+   - Proper way to implement thread safe singleton
+
+ - Unit tests
+   - How to set up, run
+   - setUp, tearDown
+
+ - Force a stack dump on a java process
+ - What is the difference between str1 == str2 and str1.equals(str2)
+ - No memory leaks in java?
+ - final, finally, finalize?
+ - Write a function to read in /etc/password and print out all the uids
+
+JDBC
+ - Step by step how to
+   - Load driver, Connection, Statement, execute, ResultSet, close
+ - PreparedStatement vs. Statement?
+ - Connection pools
+ - Isolation levels
+   TRANSACTION_{NONE,READ_COMMITTED,READ_UN,REPEATABLE_READ,SERIALIZABLE}
+
+Hibernate
+ - Overview of how to set up given a db table
+ - How to handle composite keys
+ - Insert/update a row
+ - Batching
+ - Components
+ - Associations
+ - Different ways of selecting data
+   - Criteria
+   - HQL
+   - Projections
+   - Built-in functions (get)
+ - How to redefine the length of a session
+
+Linux
+ - top -- Box is very busy and you want to find out what it's doing
+ - strace -- Process is 100% cpu but doesn't seem to be producing output.
+ - View contents of a file? End of the file only? First 15 lines?
+ - Get a count of the number of lines/bytes/characters in a file
+ - How do file permissions work?
+   -- What is the sticky bit and what does it mean on files? directories?
+ - What does lsof tell you?
+ - How can I tell if the disk is really busy?
+ - How to start a process at boot time? init.d/rc.local, runlevel, chkconfig
+
+AOP
+ - What is it
+ - Example on why you would use it.
+
+Spring
+ - What is it/What does it provide
+ - What is an advantage of using Spring
+
+Database
+ - What is deadlock
+ - What is a view/materialized view
+ - Difference between inner/outer join
+ - Difference between where/having
+ - group by example
+ - join example
+ - Query optimization
+ - Locking (row/table level, select for update, etc.)
+
+Exercises
+ - Fuse question
+ - Given the root node and two other nodes in a binary tree, find the deepest common ancestor
+ - OO Design for Card game (war)
+   - Card/Deck design. Enum, compareTo, equals
+   - Function for
+     - Sorting (Comparator)
+     - Shuffling
+
+CM stuff
+ - Source control cvs, svn, ?
+   - branching, tagging
+ - Maven or Ant
+
+Hadoop
+ - What is the purpose of ...
+   * name node?
+     Controls filename -> blocksequence; block->machinelist
+   * job tracker?
+     Pushes work out to available task tracker nodes, keeping the work
+     as close to the data as possible.
+   * Rack awareness?
+     The JT knows which nodes contain the data and which other machines
+     are nearby. Reduce traffic to the main backbone network.
+   * task tracker?
+     Spawns new jvm to launch job. heartbeat to jt every few minutes.
+   * combiners?
+     Optimize/minimize the number of key/value pairs that will be shuffled
+     across the network between mappers and reducers.
+   * secondary name node?
+     Regularly connects with the Primary Namenode and builds snapshots 
+     of the Primary Namenode's directory information, which is then 
+     saved to local/remote directories. These checkpointed images can
+     be used to restart a failed Primary Namenode without having to
+     replay the entire journal of filesystem actions, the edit log to
+     create an up-to-date directory structure.
+
+
+
