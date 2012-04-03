@@ -75,8 +75,6 @@ function switchjava() {
     JAVA_HOME=/usr/local/jdk${version}
   elif [ -d /usr/java/jdk${version} ]; then
     JAVA_HOME=/usr/java/jdk${version}
-  elif [ -d /data/servers/weblogic92//data/servers/weblogic92/jdk${version} ]; then
-    JAVA_HOME=/usr/java/jdk${version}
   elif [ -d /usr/java/j2sdk${version} ]; then
     JAVA_HOME=/usr/java/j2sdk${version}
   else
@@ -135,12 +133,20 @@ export JAD_OPTIONS="-s .java -b -ff -nonlb -o -f"
 export INTELLIJ_HOME=/usr/local/idea
 
 export JAVA_VERSION=1.6
-export JAVA_HOME=/usr/local/jdk${JAVA_VERSION}
+if [ "$OSNAME" = "Darwin" -a -f /usr/libexec/java_home ]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+else
+  export JAVA_HOME=/usr/local/jdk${JAVA_VERSION}
+fi
+
 if [ ! -d $JAVA_HOME ]; then
   if [ -d /usr/java/jdk${JAVA_VERSION} ]; then
     export JAVA_HOME=/usr/java/jdk${JAVA_VERSION}
   elif [ -d /usr/local/java ]; then
     export JAVA_HOME=/usr/local/java
+  elif [ -d /usr/java/latest ]; then
+    # CentOS rpm install
+    export JAVA_HOME=/usr/java/latest
   else
     echo "Cannot find JAVA_HOME."
     unset JAVA_HOME
@@ -148,12 +154,16 @@ if [ ! -d $JAVA_HOME ]; then
 fi
 echo "JAVA_HOME set to $JAVA_HOME"
 
-export MAVEN_HOME=/usr/local/maven
-export MAVEN2_HOME=/usr/local/maven2
-export PATH=$MAVEN_HOME/bin\
+# Maven home directory
+if [ -e /usr/share/maven ]; then
+  export M2_HOME=/usr/share/maven
+else
+  export M2_HOME=/usr/local/maven
+fi
+export PATH=\
 :$JAVA_HOME/bin\
 :$INTELLIJ_HOME/bin\
-:$MAVEN2_HOME/bin\
+:$M2_HOME/bin\
 :$PATH
 
 ###########################################################
@@ -185,3 +195,7 @@ if [ -d /usr/local/ant ] ; then
 fi
 
 export NLS_LANG=AMERICAN_AMERICA.ZHS16CGB231280
+
+# Thanks MacOSX. Default Java charset is MacRoman, this overrides that.
+export JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8"
+
