@@ -154,12 +154,16 @@ if [ ! -d $JAVA_HOME ]; then
 fi
 echo "JAVA_HOME set to $JAVA_HOME"
 
-# Maven home directory
-if [ -e /usr/share/maven ]; then
+# Maven home directory; allow local home dir override
+if [ -e $HOME/maven ]; then
+  export M2_HOME=$HOME/maven
+elif [ -e /usr/share/maven ]; then
   export M2_HOME=/usr/share/maven
 else
   export M2_HOME=/usr/local/maven
 fi
+echo M2_HOME=$M2_HOME
+
 export PATH=\
 :$JAVA_HOME/bin\
 :$INTELLIJ_HOME/bin\
