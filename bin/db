@@ -2,40 +2,53 @@
 
 ##
 # This is a shell wrapper to the java DBUtil.
+# One must have run "mvn install" in that project first in order for this
+# to work properly.
 #
 # If you want to override the database url, etc. you need to set the variable
 # on the command line. For example,
-#
-# DB_URL=jdbc:inetdae7a:ehdb?database=eharmony_staging db -l
 #
 # author: Frank Maritato
 # date: 3/23/05
 ##
 
-DB_URL=${DB_URL:-'jdbc:inetdae7a:ehdb?database=eharmony_dev'}
-DB_DRIVER=${DB_DRIVER:-'com.inet.tds.TdsDriver'}
-DB_USER=${DB_USER:-'eharmony'}
-DB_PASS=${DB_PASS:-'eh264zf4f'}
+FMUTILS_VERSION=1.0.0
+FMUTILS_JAR=$HOME/.m2/repository/com/fmaritato/dbutils/$FMUTILS_VERSION/dbutils-$FMUTILS_VERSION-jar-with-dependencies.jar
 
-if [ "$DEBUG" != "" ] ; then
-  set -x
-fi
+DB_URL=
+DB_DRIVER=
+DB_USER=
+DB_PASS=
 
-if [ ! -f $FMARITATO_BASE/classpath.sh ]; then
-  echo "You must run maven classpath-script first!"
-else
-  . $FMARITATO_BASE/classpath.sh
-fi
+while getopts "xd:u:r:p:ha:" x
+do
+  case $x in
+    u) DB_USER=$OPTARG
+      ;;
+    d) DB_DRIVER=$OPTARG
+      ;;
+    r) DB_URL=$OPTARG
+      ;;
+    p) DB_PASS=$OPTARG
+      ;;
+    a) PASS_THRU_ARGS=$OPTARG
+      ;;
+    x) set -x
+      ;;
+    *) echo "USAGE: $0 -u db_user -d db_driver -r db_url -p db_pass [-x]"
+      ;;
+  esac
+done
 
 exec java \
--Xms512m \
--Xmx1024m \
- -cp $FMARITATO_BASE/target/fmaritato-1.0-DEV.jar:$CP\
- -Ddb.url="$DB_URL"\
- -Ddb.driver=$DB_DRIVER\
- -Ddb.username=$DB_USER\
- -Ddb.password=$DB_PASS\
- -Ddb.fetchSize=500\
- -Dlog4j.configuration=log4j.xml\
- com.maritatf.util.DBUtil "$@"
+  -Xms512m \
+  -Xmx1024m \
+  -cp $FMUTILS_JAR \
+  -Ddb.url="$DB_URL"\
+  -Ddb.driver=$DB_DRIVER\
+  -Ddb.username=$DB_USER\
+  -Ddb.password=$DB_PASS\
+  -Ddb.fetchSize=500\
+  -Dlog4j.configuration=log4j.xml\
+  com.fmaritato.dbutil.DBUtil "$PASS_THRU_ARGS"
 
