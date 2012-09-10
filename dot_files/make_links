@@ -2,7 +2,7 @@
 
 cd $HOME
 pwd
-for f in `ls -d $HOME/projects/fmaritato/dot_files/.??*`
+for f in `ls -d $HOME/projects/homedirstuff/dot_files/.??*`
 do
   filename=${f:t}
   if [ -f $f ]; then
