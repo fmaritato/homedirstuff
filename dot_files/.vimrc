@@ -85,7 +85,7 @@ set laststatus=2
 set noshowcmd
 
 " Number of spaces to use for each step of (auto)indent.
-set shiftwidth=2
+set shiftwidth=4
 
 " If in Insert, Replace or Visual mode put a message on the last line.
 set showmode
@@ -139,6 +139,7 @@ vmap ;i :!sortImports<CR>
 vmap ;t :!fix_indentation.pl<CR>
 vmap ;x :!xml_indent.pl<CR>
 vmap ;q :!xml_reformat.pl<CR>=G
+nmap ,cl :1<CR>O<ESC>:1<CR>:r!date<CR>0i* <ESC>$a Frank Maritato <frank.maritato@openx.com><ESC>:1<CR>dd
 
 " When a character is present this indicates vi-compatible behavior.
 "set cpo-=<
