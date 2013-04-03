@@ -9,23 +9,16 @@ Java Language
    private - class only
    protected - class and subclass
    default - class, subclass in same package
-
- - Difference between Vector, List and array. When would you want to use each one.
-
- - What is:
-   - Autoboxing
-   - Generics/for loop
-   - Typesafe enums
-   - Annotations
-
- - What is Garbage Collection
-   - -Xms, -Xmx values, what happens if vm needs to allocate more space.
-   - How to prevent freeze (concurrent gc)
-
- - Threads
-   - How to protect shared data structure
    - Variable marked as "volatile". What does that mean?
-   - Proper way to implement thread safe singleton
+   - Variable marked as "static". What does that mean?
+   - Variable marked as "final". What does that mean?
+
+ - Difference between Vector, List and array.
+   - When would you want to use each one?
+
+ - How do you prevent a method from being overridden?
+ - What is generics and what is the benefit of using it?
+ - Which two methods do you need to implement for key object in HashMap?
 
  - Unit tests
    - How to set up, run
@@ -33,9 +26,6 @@ Java Language
 
  - Force a stack dump on a java process
  - What is the difference between str1 == str2 and str1.equals(str2)
- - No memory leaks in java?
- - final, finally, finalize?
- - Write a function to read in /etc/password and print out all the uids
 
 JDBC
  - Step by step how to
@@ -90,7 +80,9 @@ Database
 
 Exercises
  - Fuse question
+ - Write a function to read in /etc/passwd and print out all the uids in numerical order
  - Given the root node and two other nodes in a binary tree, find the deepest common ancestor
+ - Write a function to score a game of bowling. Open frame face value, Spare gives bonus of next roll, strike gives bonus of next two rolls.
  - OO Design for Card game (war)
    - Card/Deck design. Enum, compareTo, equals
    - Function for
@@ -98,32 +90,6 @@ Exercises
      - Shuffling
 
 CM stuff
- - Source control cvs, svn, ?
+ - Source control cvs, svn, git, etc.
    - branching, tagging
  - Maven or Ant
-
-Hadoop
- - What is the purpose of ...
-   * name node?
-     Controls filename -> blocksequence; block->machinelist
-   * job tracker?
-     Pushes work out to available task tracker nodes, keeping the work
-     as close to the data as possible.
-   * Rack awareness?
-     The JT knows which nodes contain the data and which other machines
-     are nearby. Reduce traffic to the main backbone network.
-   * task tracker?
-     Spawns new jvm to launch job. heartbeat to jt every few minutes.
-   * combiners?
-     Optimize/minimize the number of key/value pairs that will be shuffled
-     across the network between mappers and reducers.
-   * secondary name node?
-     Regularly connects with the Primary Namenode and builds snapshots 
-     of the Primary Namenode's directory information, which is then 
-     saved to local/remote directories. These checkpointed images can
-     be used to restart a failed Primary Namenode without having to
-     replay the entire journal of filesystem actions, the edit log to
-     create an up-to-date directory structure.
-
-
-

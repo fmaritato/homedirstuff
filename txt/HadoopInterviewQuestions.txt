@@ -1,0 +1,21 @@
+Hadoop Interview Questions
+ - Discuss the function of the following hadoop processes:
+   * name node
+   * data node
+   * job tracker
+   * task tracker
+   * secondary name node
+ - What is a combiner?
+ - What is rack awareness?
+ - How does hadoop determine the number of mappers to allocate to a job?
+ - What is speculative execution?
+ - One reducer is doing more work than all the others. How to fix?
+ - What are the various job schedulers and how do they work?
+   - Fifo, Capacity, Fair
+ - What do you need to do to take a machine out of service?
+ - How to decide how many Map/Reduce slots to allocate for a set of machines?
+ - What does the job tracker do in case of a task failure? Name node?
+ - Missing or Under-replicated blocks, what to do?
+ - Flume?
+ - Sqoop?
+ - zoo keeper?
