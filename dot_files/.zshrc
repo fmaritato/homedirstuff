@@ -38,6 +38,11 @@ alias whohasmyport='/sbin/fuser -v -n tcp '
 # Must provide host:port
 alias whohasmyport2='/usr/sbin/lsof -i tcp@'
 
+alias gitprune="git branch --merged master | grep -v 'master$' | xargs git branch -d"
+alias prod1='ssh hdpclient1.bigdataprod1.wh.truecarcorp.com'
+alias dev2='ssh hdpclient1.bigdatadev2.lb.truecarcorp.com'
+alias dev3='ssh hdpclient1.bigdatadev3.lb.truecarcorp.com'
+
 ##########################################
 # Functions
 ##########################################
@@ -91,6 +96,38 @@ function switchjava() {
   echo JAVA_HOME: $JAVA_HOME
 }
 
+function java6() {
+  if [ "$OSNAME" = "Darwin" ]; then
+      JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+      PATH=$JAVA_HOME/bin:$PATH
+  fi
+}
+function java7() {
+  if [ "$OSNAME" = "Darwin" ]; then
+      JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home
+      PATH=$JAVA_HOME/bin:$PATH
+  fi
+}
+function scp_latest() {
+  FILE_PAT=$1
+  DEST=$2
+  FILES=( $(ls -t ${FILE_PAT}*) )
+  for f in "${FILES[@]}"
+  do
+      scp $f $DEST:
+      break
+  done
+}
+function rpmuplatest() {
+  FILE_PAT=$1
+  FILES=( $(ls -t ${FILE_PAT}*) )
+  for f in "${FILES[@]}"
+  do
+      echo Installing $f
+      sudo rpm -Uvh $f
+      break
+  done
+}
 ##########################################
 # Other options
 ##########################################
@@ -132,7 +169,7 @@ esac
 export JAD_OPTIONS="-s .java -b -ff -nonlb -o -f"
 export INTELLIJ_HOME=/usr/local/idea
 
-export JAVA_VERSION=1.6
+export JAVA_VERSION=1.7
 if [ "$OSNAME" = "Darwin" -a -f /usr/libexec/java_home ]; then
   export JAVA_HOME=$(/usr/libexec/java_home)
 else
@@ -201,5 +238,8 @@ fi
 export NLS_LANG=AMERICAN_AMERICA.ZHS16CGB231280
 
 # Thanks MacOSX. Default Java charset is MacRoman, this overrides that.
-export JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8"
+export JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8 -Djava.security.krb5.realm= -Djava.security.krb5.kdc= -Djava.security.krb5.conf=/dev/null"
+
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
