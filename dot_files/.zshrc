@@ -39,9 +39,13 @@ alias whohasmyport='/sbin/fuser -v -n tcp '
 alias whohasmyport2='/usr/sbin/lsof -i tcp@'
 
 alias gitprune="git branch --merged master | grep -v 'master$' | xargs git branch -d"
-alias prod1='ssh hdpclient1.bigdataprod1.wh.truecarcorp.com'
-alias dev2='ssh hdpclient1.bigdatadev2.lb.truecarcorp.com'
-alias dev3='ssh hdpclient1.bigdatadev3.lb.truecarcorp.com'
+
+alias gsandbox="gcloud auth activate-service-account --key-file ~/projects/dataplatform-container-definitions/apache-nifi/.secrets/Data-Platform-Sandbox-af3a750722d4.json && gcloud config set project data-platform-sandbox && gcloud container clusters get-credentials data-platform-sandbox"
+alias gprod="gcloud auth activate-service-account --key-file ~/projects/dataplatform-container-definitions/apache-nifi/.secrets/Data-Platform-Production-b830eab0fb38.json && gcloud config set project data-platform-production && gcloud container clusters get-credentials data-platform-prod"
+alias docker_clean="docker rm -v \$(docker ps -a -q -f status=exited) && docker rmi \$(docker images -f "dangling=true" -q)"
+alias knifi="kubectl --namespace apache-nifi"
+alias kube_bash="kubectl --namespace apache-nifi exec -it apache-nifi-1482231614-p2m8g --container apache-nifi  -- bash"
+# defaults write com.apple.Terminal CopyAttributesProfile com.apple.Terminal.no-attributes
 
 ##########################################
 # Functions
@@ -140,8 +144,8 @@ HISTSIZE=10000           # How many commands to remember
 # di is for directories; 01 use brighter colors; 33 is yellow
 export LS_COLORS='di=01;33:*.bz2=01;31:*.Z=01;31:*.gz=01;31:*.zip=01;31'
 
-# Automagically start less case-insensitive and clear screen.
-export LESS="-Ic"
+# Automagically start less case-insensitive,clear screen,raw control chars (for git diff).
+export LESS="-Icr"
 
 umask 022
 
@@ -240,6 +244,37 @@ export NLS_LANG=AMERICAN_AMERICA.ZHS16CGB231280
 # Thanks MacOSX. Default Java charset is MacRoman, this overrides that.
 export JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8 -Djava.security.krb5.realm= -Djava.security.krb5.kdc= -Djava.security.krb5.conf=/dev/null"
 
+export GOPATH=$HOME/projects/gocode
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:/usr/local/go/bin:$HOME/projects/gocode/bin
+
+SPARK_HOME=/usr/local/spark
+PYTHONPATH=$PYTHONPATH:$SPARK_HOME/python
+export SPARK_HOME PYTHONPATH
+
+GROOVY_HOME=/usr/local/groovy-2.4.7
+PATH=$PATH:$GROOVY_HOME/bin
+export GROOVY_HOME PATH
+
+JYTHON_HOME=/usr/local/jython2.7.0
+PATH=$PATH:$JYTHON_HOME/bin
+export JYTHON_HOME PATH
+
+RUBY_HOME=/usr/local/Cellar/ruby/2.4.1_1
+PATH=$RUBY_HOME/bin:$PATH
+export RUBY_HOME PATH
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f /Users/frankm/Downloads/google-cloud-sdk/path.zsh.inc ]; then
+  source '/Users/frankm/Downloads/google-cloud-sdk/path.zsh.inc'
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f /Users/frankm/Downloads/google-cloud-sdk/completion.zsh.inc ]; then
+  source '/Users/frankm/Downloads/google-cloud-sdk/completion.zsh.inc'
+fi
+
+export NVM_DIR="/Users/frankm/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
