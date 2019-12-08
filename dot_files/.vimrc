@@ -1,5 +1,6 @@
 version 7.0
 set list
+" set number
 
 " line length
 "set wrapmargin=500
@@ -32,7 +33,7 @@ set ic
 
 " Don't try to format when pasting into window
 set pastetoggle=<F8>
-
+set paste
 " Show tabs
 set listchars=tab:>+,trail:+
 
