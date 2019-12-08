@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SERVER=artifactory.otenv.com
+GROUP=${GROUP:-}
+ARTIFACT=${ARTIFACT:-}
+REPO=${REPO:-"internal-local"}
+
+set -e
+set -u
+
+curl "http://${SERVER}/api/search/latestVersion?g=${GROUP}&a=${ARTIFACT}&repo=${REPO}"
