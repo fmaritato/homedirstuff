@@ -3,7 +3,7 @@
 GROUP=
 ARTIFACT=
 VERSION=1.0.0.0-SNAPSHOT
-ARCH_VERSION=1.1.1
+ARCH_VERSION=1.1
 while getopts v:g:a: x
 do
   case $x in 
@@ -24,9 +24,7 @@ if [ -z "$GROUP" -o -z "$ARTIFACT" ]; then
 fi
 
 mvn archetype:generate                         \
-  -DarchetypeRepository=http://maven.openx.org:8081/artifactory/simple/libs-release-local \
-  -DarchetypeGroupId=org.openx.maven           \
-  -DarchetypeArtifactId=openx-maven-archetype  \
+  -DarchetypeArtifactId=maven-archetype-quickstart \
   -DarchetypeVersion=$ARCH_VERSION             \
   -DinteractiveMode=false                      \
   -DgroupId=$GROUP                             \
